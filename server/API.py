@@ -2,28 +2,33 @@ from flask import Flask, request, jsonify
 import os
 from datetime import datetime
 from flask_httpauth import HTTPBasicAuth
-from passlib.hash import sha256_crypt
+from passlib.hash import bcrypt
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 
-# Define the dictionary of users and their hashed passwords
-users = {
-    "user1": sha256_crypt.hash("password1"),
-    "user2": sha256_crypt.hash("password2"),
-}
-
 # Define the path to the log file
 log_file_path = 'api_log.log'
+
+# Create a dictionary of users and their hashed passwords
+users = {}
+
+# Function to load user data, including password hashes, from a file
+def load_user_data():
+    with open('user_data.txt', 'r') as file:
+        for line in file:
+            username, hashed_password = line.strip().split(',')
+            users[username] = hashed_password
+
+# Load user data at startup
+load_user_data()
 
 # Authentication callback
 @auth.verify_password
 def verify_password(username, password):
     if username in users:
         stored_hash = users[username]  # Get the stored hash for the user
-        print(f"Provided Password: {password}")  # Debug statement
-        print(f"Stored Hash: {stored_hash}")  # Debug statement
-        if sha256_crypt.verify(password, stored_hash):
+        if bcrypt.verify(password, stored_hash):
             return username
         else:
             # Log failed login attempt with both username and password used
