@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from flask_httpauth import HTTPBasicAuth
 from passlib.hash import bcrypt
+# import ssl
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -97,5 +98,15 @@ def get_code():
         return jsonify({'error': 'Key has exceeded the maximum number of uses'}), 400
 
 if __name__ == '__main__':
+    # ==== HTTP ==== #
     # app.run(host='192.168.0.37', port=5000)
     app.run(debug=True)
+    # =============== #
+
+    # ==== HTTPS ==== #
+    # Configure SSL/TLS
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    # context.load_cert_chain('your_certificate.pem', 'your_private_key.pem')
+    # Start the Flask app with SSL/TLS
+    # app.run(debug=True, host='0.0.0.0', port=443, ssl_context=context)
+    # =============== #
