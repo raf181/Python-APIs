@@ -66,7 +66,7 @@ def get_code():
 
     code, max_uses = load_code_from_file(user, key)
 
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:M:S')
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     if code is None:
         # Log user data for denied request (key not found)

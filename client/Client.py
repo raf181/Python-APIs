@@ -3,6 +3,7 @@ import json
 
 # Replace with the URL of your Flask API
 api_url = 'http://127.0.0.1:5000/get_code'
+# api_url = 'http://192.168.0.37:5000/get_code'
 
 # Define the user's credentials
 user = 'user2'  # Replace with the desired username
@@ -33,9 +34,11 @@ if response.status_code == 200:
             print("API response is missing code.")
     except json.JSONDecodeError:
         print("API response is not valid JSON.")
+elif response.status_code == 400:
+    print(f"Key has exceeded the maximum number of uses. code: {response.status_code}")
 elif response.status_code == 401:
-    print("Wrong password or user. Please check your password and user.")
+    print(f"Wrong password or user. Please check your password and user. code: {response.status_code}")
 elif response.status_code == 404:
-    print("Key not found. Please check the key.")
+    print(f"Key not found. Please check the key. code: {response.status_code}")
 else:
     print(f"Error: API responded with status code {response.status_code}")
