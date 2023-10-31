@@ -5,6 +5,10 @@
 Clone the repository: `git clone`
 Requirements: `flask`, `flask_httpauth`
 
+```bash
+git clone https://github.com/raf181/Python-APIs.git
+```
+
 ## Configuration
 
 Add users and their passwords
