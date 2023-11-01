@@ -2,9 +2,9 @@ from flask import Flask, request, jsonify
 import os
 from datetime import datetime
 from flask_httpauth import HTTPBasicAuth
-from passlib.hash import bcrypt
-# import ssl
+from passlib.hash import sha256_crypt  # Import sha256_crypt for password hashing
 
+# Create a Flask app
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 
@@ -29,7 +29,7 @@ load_user_data()
 def verify_password(username, password):
     if username in users:
         stored_hash = users[username]  # Get the stored hash for the user
-        if bcrypt.verify(password, stored_hash):
+        if sha256_crypt.verify(password, stored_hash):  # Verify using sha256_crypt
             return username
         else:
             # Log failed login attempt with both username and password used
@@ -59,6 +59,7 @@ def load_code_from_file(user, key):
 
     return code, max_uses
 
+# Route for retrieving code
 @app.route('/get_code', methods=['POST'])
 @auth.login_required
 def get_code():
