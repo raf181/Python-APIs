@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!--      Stylesheets    =============================================      
+    <link href="css/css.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css.css') }}">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <table border="1">
+        <tr>
+            <th>Timestamp</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Key Requested</th>
+            <th>IP Address</th>
+        </tr>
+        {% for entry in attempts_data %}
+            <tr>
+                <td>{{ entry.timestamp }}</td>
+                <td>{{ entry.user }}</td>
+                <td>{{ entry.status }}</td>
+                <td>{{ entry.key_requested }}</td>
+                <td>{{ entry.ip_address }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

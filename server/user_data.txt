@@ -1,1 +1,2 @@
 user1,$5$rounds=535000$BQ.lztHWC8d0uznZ$aBhDg.T7MLRlBshZvmX.yY6DMuy.Y1b2gAf2bAFGbm3
+admin,$5$rounds=535000$BQ.lztHWC8d0uznZ$aBhDg.T7MLRlBshZvmX.yY6DMuy.Y1b2gAf2bAFGbm3
