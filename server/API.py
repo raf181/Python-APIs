@@ -28,15 +28,17 @@ load_user_data()
 @auth.verify_password
 def verify_password(username, password):
     # Verify user credentials during authentication
+    client_ip = request.remote_addr  # Get the client's IP address
+
     if username in users:
         stored_hash = users[username]
         if sha256_crypt.verify(password, stored_hash):
             return username
         else:
-            # Log failed login attempt with timestamp, username, and status
+            # Log failed login attempt with timestamp, username, status, and IP address
             timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             with open(log_file_path, 'a') as log_file:
-                log_file.write(f"Timestamp: {timestamp}, User: {username}, Status: Failed Login Attempt\n")
+                log_file.write(f"Timestamp: {timestamp}, User: {username}, Status: Failed Login Attempt, IP Address: {client_ip}\n")
     return None
 
 # Function to load code from file based on user and key
@@ -97,6 +99,7 @@ def admin_dashboard():
 def get_code():
     user = auth.current_user()
     key = request.json.get('key')
+    client_ip = request.remote_addr  # Get the client's IP address
 
     code, max_uses = load_code_from_file(user, key)
 
@@ -104,7 +107,7 @@ def get_code():
 
     if code is None:
         # Log user data for denied request (key not found)
-        user_data = f"Date: {timestamp}, User: {user}, Key Requested: {key}, Status: Denied (Key Not Found)\n"
+        user_data = f"Date: {timestamp}, User: {user}, Key Requested: {key}, Status: Denied (Key Not Found), IP Address: {client_ip}\n"
         with open(log_file_path, 'a') as log_file:
             log_file.write(user_data)
 
@@ -116,7 +119,7 @@ def get_code():
             max_uses_file.write(str(max_uses))
 
         # Log user data for successful request
-        user_data = f"Timestamp: {timestamp}, User: {user}, Key Requested: {key}, Status: Accepted\n"
+        user_data = f"Timestamp: {timestamp}, User: {user}, Key Requested: {key}, Status: Accepted, IP Address: {client_ip}\n"
         with open(log_file_path, 'a') as log_file:
             log_file.write(user_data)
 
@@ -124,7 +127,7 @@ def get_code():
 
     else:
         # Log user data for denied request (exceeded maximum uses)
-        user_data = f"Timestamp: {timestamp}, User: {user}, Key Requested: {key}, Status: Denied (Exceeded Maximum Uses)\n"
+        user_data = f"Timestamp: {timestamp}, User: {user}, Key Requested: {key}, Status: Denied (Exceeded Maximum Uses), IP Address: {client_ip}\n"
         with open(log_file_path, 'a') as log_file:
             log_file.write(user_data)
 

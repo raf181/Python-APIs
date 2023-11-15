@@ -7,8 +7,8 @@ api_url = 'http://127.0.0.1:5000/get_code'
 # api_url = 'http://192.168.0.22:5000/get_code'
 
 # Define the user's credentials
-user = 'user1'  # Replace with the desired username
-password = 'password1'  # Replace with the user's password
+user = 'user2'  # Replace with the desired username
+password = 'password2'  # Replace with the user's password
 
 # Define the key you want to use
 key = 'key'  # Replace with the desired key
