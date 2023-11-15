@@ -4,30 +4,51 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Py-API Dashboard</title>
     <!--      Stylesheets    =============================================      
     <link href="css/css.css" rel="stylesheet">-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
-    <table border="1">
-        <tr>
-            <th>Timestamp</th>
-            <th>User</th>
-            <th>Status</th>
-            <th>Key Requested</th>
-            <th>IP Address</th>
-        </tr>
-        {% for entry in attempts_data %}
-            <tr>
-                <td>{{ entry.timestamp }}</td>
-                <td>{{ entry.user }}</td>
-                <td>{{ entry.status }}</td>
-                <td>{{ entry.key_requested }}</td>
-                <td>{{ entry.ip_address }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    
+    <div class="body-div">
+        <div class="data-div">
+            <div class="data-div-header">
+                <h2>Users</h2>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+
+    
+    <div class="body-div">
+        <div class="data-div">
+            <div class="data-div-header">
+                <h2>Request log</h2>
+            </div>
+            <table class="data-table">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Key Requested</th>
+                    <th>IP Address</th>
+                </tr>
+                {% for entry in attempts_data %}
+                    <tr class="data-line-tr">
+                        <td class="data-coloum-td" style="border:#6e7681 1px solid; text-align: center;">{{ entry.timestamp }}</td>
+                        <td class="data-coloum-td" style="border:#6e7681 1px solid; text-align: center;">{{ entry.user }}</td>
+                        <td class="data-coloum-td" style="border:#6e7681 1px solid; text-align: center;">{{ entry.status }}</td>
+                        <td class="data-coloum-td" style="border:#6e7681 1px solid; text-align: center;">{{ entry.key_requested }}</td>
+                        <td class="data-coloum-td" style="border:#6e7681 1px solid; text-align: center;">{{ entry.ip_address }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 </body>
 </html>

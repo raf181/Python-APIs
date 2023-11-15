@@ -1,0 +1,76 @@
+/*b @import url("theme.css"); */
+ 
+html {
+    scroll-behavior: smooth;
+    
+  }
+  /* Set the width of the scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  /* Set the background color of the scrollbar track */
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  /* Set the background color and transparency of the scrollbar thumb */
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+  }
+  
+  body {
+      /* Set the color of the text and background */
+      background-color: #010409;
+  
+      /* Set the font family */
+      font-family: Satoshi;
+      font-size: 17px;
+      line-height: 1.47059;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      color: #ffffffab;
+      font-style: normal;
+  
+      /* Remove the default margin */
+      margin: 0;
+  }
+  header {
+    max-height: 45px;
+    background-color: #21262d;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .body-div {
+    margin: 1.5rem;
+  }
+  .data-div {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    background-color: #0d1117;
+    border: #6e7681 solid 0.5px;
+    border-radius: 0.5rem;
+  }
+  .data-div-header {
+    text-align: center;
+    font-size: 1rem;
+  }
+  .data-table {
+    border: 0.5px solid #000000;
+    background-color: black;
+  }
+
+  .data-table tr th {
+    border:#6e7681 1px solid; 
+    text-align: center;
+    background-color: #161b22;
+  }

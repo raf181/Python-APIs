@@ -3,8 +3,8 @@ import json
 
 # Replace with the URL of your Flask API, by default it will be using http,
 # if you are using https, change it to https
-# api_url = 'http://127.0.0.1:5000/get_code'
-api_url = 'http://192.168.0.22:5000/get_code'
+api_url = 'http://127.0.0.1:5000/get_code'
+# api_url = 'http://192.168.0.22:5000/get_code'
 
 # Define the user's credentials
 user = 'user1'  # Replace with the desired username
