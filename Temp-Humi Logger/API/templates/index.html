@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Data Dashboard</title>
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <!-- Adjust the stylesheet reference -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/css.css') }}">
+
+    <!-- Remove unnecessary favicon links -->
+    <!-- <link rel="icon" type="image/png" sizes="96x96" href="https://avatars.githubusercontent.com/u/93051606?v=4"> -->
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="https://avatars.githubusercontent.com/u/93051606?v=4"> -->
+</head>
+<body>
+    <header>
+        <h1>ESP32 Data Dashboard</h1>
+    </header>
+
+    <div class="body-div">
+        <div class="data-div">
+            <div class="btn-div">
+                <div class="btn-continer">
+                    <a href="{{ url_for('export_csv') }}" class="btn btn-export">Export CSV</a>
+                </div>
+                <div class="btn-continer">
+                    <a href="{{ url_for('reset_data') }}" class="btn btn-delete">Reset Data</a>
+                </div>
+                
+            </div>
+            <div class="data-div-header">
+                <h2>Data Log</h2>
+            </div>
+            <table class="data-table">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Temperature Sensor 1</th>
+                    <th>Humidity Sensor 1</th>
+                    <th>Temperature Sensor 2</th>
+                    <th>Humidity Sensor 2</th>
+                </tr>
+                {% for entry in data %}
+                <tr class="data-line-tr">
+                    <td class="data-coloum-td">{{ entry.timestamp }}</td>
+                    <td class="data-coloum-td">{{ entry.temperature1 }}</td>
+                    <td class="data-coloum-td">{{ entry.humidity1 }}</td>
+                    <td class="data-coloum-td">{{ entry.temperature2 }}</td>
+                    <td class="data-coloum-td">{{ entry.humidity2 }}</td>
+                </tr>                
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
