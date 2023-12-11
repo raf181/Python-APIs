@@ -16,6 +16,9 @@ if %errorlevel% neq 0 (
 REM Install required Python packages
 echo Installing required Python packages...
 pip install flask
-
+pip install Flask-BasicAuth
+echo.
+echo.
 echo Dependencies installation completed.
+echo.
 pause

@@ -4,7 +4,7 @@ from datetime import datetime
 import random
 
 # Replace these values with your server information
-server_address = "http://192.168.43.1:5000/data"
+server_address = "http://127.0.0.1:5000/data"
 
 # Function to simulate sensor readings with variability
 def simulate_sensor_readings():
@@ -45,7 +45,7 @@ def send_data_to_server():
 def main():
     while True:
         send_data_to_server()
-        time.sleep(60)  # Wait for 1 minute before sending new data
+        time.sleep(5)  # Wait for 1 minute before sending new data
 
 if __name__ == "__main__":
     main()
