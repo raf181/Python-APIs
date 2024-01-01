@@ -1,5 +1,6 @@
 # API
-
+> [!warning]
+> These API will retrieve and run any code on the client machine, it does not have any security checks.
 ## Install
 
 Clone the repository: `git clone`

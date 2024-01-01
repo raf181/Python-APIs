@@ -1,28 +1,34 @@
-#include <WiFi.h>
+#include <WiFiManager.h> // Include the WiFiManager library
 #include <DHT.h>
 #include <HTTPClient.h>
 
-#define DHTPIN1 12 // Replace with your ESP32 GPIO pin number
-#define DHTPIN2 13 // Replace with your ESP32 GPIO pin number
+#define DHTPIN1 12
+#define DHTPIN2 13
 #define DHTTYPE DHT11
 
 DHT dht1(DHTPIN1, DHTTYPE);
 DHT dht2(DHTPIN2, DHTTYPE);
 
-const char* ssid = "testwifi"; // Replace with your WiFi SSID
-const char* password = "testwifi"; // Replace with your WiFi password
-const char* server = "192.168.43.1"; // Replace with your server IP address
+const char* server = "192.168.43.1";
 
 void setup() {
   Serial.begin(115200);
   delay(1000);
 
-  // Connect to Wi-Fi
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi...");
+  // Create an instance of WiFiManager
+  WiFiManager wifiManager;
+
+  // Uncomment the line below to reset WiFi settings (useful during development)
+  // wifiManager.resetSettings();
+
+  // Connect to WiFi or start a configuration portal if not connected
+  if (!wifiManager.autoConnect("AutoConnectAP")) {
+    Serial.println("Failed to connect and hit timeout");
+    delay(3000);
+    // Reset and try again or put your code to handle the failure
+    ESP.restart();
   }
+
   Serial.println("Connected to WiFi");
 
   dht1.begin();
@@ -30,15 +36,13 @@ void setup() {
 }
 
 void loop() {
-  delay(60000); // Wait for 1 minute before sending new data
+  delay(60000);
 
-  // Reading sensor values
   float temperature1 = dht1.readTemperature();
   float humidity1 = dht1.readHumidity();
   float temperature2 = dht2.readTemperature();
   float humidity2 = dht2.readHumidity();
 
-  // Sending data to the server
   HTTPClient http;
   http.begin("http://" + String(server) + ":5000/data");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -61,7 +65,6 @@ void loop() {
 }
 
 String getFormattedTimestamp() {
-  // Get the current date and time
   time_t now;
   struct tm timeinfo;
   char timestamp[30];
@@ -72,4 +75,3 @@ String getFormattedTimestamp() {
   
   return String(timestamp);
 }
-
