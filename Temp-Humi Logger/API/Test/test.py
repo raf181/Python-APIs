@@ -45,7 +45,7 @@ def send_data_to_server():
 def main():
     while True:
         send_data_to_server()
-        time.sleep(5)  # Wait for 1 minute before sending new data
+        time.sleep(0.1)  # Wait for 1 minute before sending new data
 
 if __name__ == "__main__":
     main()

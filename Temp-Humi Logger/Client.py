@@ -52,21 +52,13 @@ class DataVisualizerApp:
         # Create Treeview widget for the table
         columns = ('Timestamp', 'Temperature 1', 'Temperature 2', 'Humidity 1', 'Humidity 2')
         self.tree = ttk.Treeview(self.tab_table, columns=columns, show='headings', height=30)
-
-        # Create vertical scrollbar for the table
-        self.tree_scrollbar = ttk.Scrollbar(self.tab_table, orient="vertical", command=self.tree.yview)
-        self.tree.configure(yscrollcommand=self.tree_scrollbar.set)
-
         for col in columns:
             self.tree.heading(col, text=col)
 
         # Move the temperature and humidity graph frames to their respective tabs
         self.plot_canvas_temperature.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.plot_canvas_humidity.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        
-        # Pack the Treeview and scrollbar
-        self.tree.pack(pady=10, side=tk.LEFT)
-        self.tree_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
+        self.tree.pack(pady=10)
 
         self.create_widgets()
 

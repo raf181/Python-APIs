@@ -19,7 +19,7 @@ class DataVisualizerApp:
         self.main_frame = ttk.Frame(root)
         self.main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Create tabs for buttons, errors, temperature, humidity, and table
+        # Create tabs for buttons, errors, and data visualization
         self.tabs = ttk.Notebook(self.main_frame)
         self.tabs.pack(fill=tk.BOTH, expand=True)
 
@@ -30,14 +30,12 @@ class DataVisualizerApp:
         self.tabs.add(self.tab_buttons, text="Buttons")
         self.tabs.add(self.tab_errors, text="Errors")
 
-        # Create tabs for temperature, humidity, and table
+        # Create tabs for temperature and humidity graphs
         self.tab_temperature = ttk.Frame(self.tabs)
         self.tab_humidity = ttk.Frame(self.tabs)
-        self.tab_table = ttk.Frame(self.tabs)
 
         self.tabs.add(self.tab_temperature, text="Temperature")
         self.tabs.add(self.tab_humidity, text="Humidity")
-        self.tabs.add(self.tab_table, text="Table")
 
         # Pack the tabs
         self.tabs.pack(fill=tk.BOTH, expand=True)
@@ -51,27 +49,16 @@ class DataVisualizerApp:
 
         # Create Treeview widget for the table
         columns = ('Timestamp', 'Temperature 1', 'Temperature 2', 'Humidity 1', 'Humidity 2')
-        self.tree = ttk.Treeview(self.tab_table, columns=columns, show='headings', height=30)
-
-        # Create vertical scrollbar for the table
-        self.tree_scrollbar = ttk.Scrollbar(self.tab_table, orient="vertical", command=self.tree.yview)
-        self.tree.configure(yscrollcommand=self.tree_scrollbar.set)
-
+        self.tree = ttk.Treeview(self.main_frame, columns=columns, show='headings', height=10)
         for col in columns:
             self.tree.heading(col, text=col)
 
         # Move the temperature and humidity graph frames to their respective tabs
         self.plot_canvas_temperature.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.plot_canvas_humidity.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        
-        # Pack the Treeview and scrollbar
-        self.tree.pack(pady=10, side=tk.LEFT)
-        self.tree_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
+        self.tree.pack(pady=10)
 
         self.create_widgets()
-
-        # Call auto_fetch_data to start automatic fetching
-        self.auto_fetch_data()
 
     def create_widgets(self):
         # Create buttons for fetching and exporting data in the Buttons tab
@@ -84,11 +71,6 @@ class DataVisualizerApp:
         # Create error code box in the Errors tab
         self.error_code_box = tk.Text(self.tab_errors, height=5, width=50)
         self.error_code_box.pack(pady=10)
-
-    def auto_fetch_data(self):
-        # Call fetch_data and then schedule auto_fetch_data to be called again after 60000 milliseconds (1 minute)
-        self.fetch_data()
-        self.root.after(60000, self.auto_fetch_data)
 
     def fetch_data(self):
         # Replace 'http://localhost:5000/data_json' with the actual endpoint of your JSON data route
@@ -128,7 +110,7 @@ class DataVisualizerApp:
         ax_temperature.plot(timestamps_downsampled, temperature1_downsampled, label='Temperature 1', marker='o')
         ax_temperature.plot(timestamps_downsampled, temperature2_downsampled, label='Temperature 2', marker='o')
         ax_temperature.set_xlabel('Timestamp')
-        ax_temperature.set_ylabel('Temperature cº')
+        ax_temperature.set_ylabel('Temperature')
         ax_temperature.set_title('Temperature Over Time')
         ax_temperature.legend()
 
@@ -156,7 +138,7 @@ class DataVisualizerApp:
         ax_humidity.plot(timestamps_downsampled, humidity1_downsampled, label='Humidity 1', marker='o')
         ax_humidity.plot(timestamps_downsampled, humidity2_downsampled, label='Humidity 2', marker='o')
         ax_humidity.set_xlabel('Timestamp')
-        ax_humidity.set_ylabel('Humidity %')
+        ax_humidity.set_ylabel('Humidity')
         ax_humidity.set_title('Humidity Over Time')
         ax_humidity.legend()
 
