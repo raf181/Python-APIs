@@ -66,12 +66,15 @@ class DataVisualizerApp:
         self.auto_fetch_data()
 
     def create_widgets(self):
-        # Create buttons for fetching and exporting data in the Buttons tab
+        # Create buttons for fetching, exporting data, and resetting data in the Buttons tab
         self.fetch_button = ttk.Button(self.tab_buttons, text="Fetch Data", command=self.fetch_data, style="primary.TButton")
         self.fetch_button.pack(pady=10)
 
         self.export_csv_button = ttk.Button(self.tab_buttons, text="Export CSV", command=self.export_csv, style="success.TButton")
         self.export_csv_button.pack(pady=10)
+
+        self.reset_data_button = ttk.Button(self.tab_buttons, text="Reset Data", command=self.reset_data, style="danger.TButton")
+        self.reset_data_button.pack(pady=10)
 
         # Create error code box in the Errors tab
         self.error_code_box = tk.Text(self.tab_errors, height=5, width=50)
@@ -85,9 +88,15 @@ class DataVisualizerApp:
     def fetch_data(self):
         # Replace 'http://localhost:5000/data_json' with the actual endpoint of your JSON data route
         api_url = 'http://localhost:5000/data_json'
+        
+        # Set your actual username and password
+        self.username = 'user'
+        self.password = 'password'
 
         try:
-            response = requests.get(api_url)
+            # Include username and password for HTTP basic authentication
+            response = requests.get(api_url, auth=(self.username, self.password))
+
             if response.status_code == 200:
                 data = response.json()
                 self.plot_temperature_data(data)
@@ -167,7 +176,7 @@ class DataVisualizerApp:
     def export_csv(self):
         # Replace 'http://localhost:5000/export_csv' with the actual endpoint of your CSV export route
         api_url = 'http://localhost:5000/export_csv'
-        response = requests.get(api_url)
+        response = requests.get(api_url, auth=(self.username, self.password))
 
         if response.status_code == 200:
             # Ask the user for the file name and location to save the CSV file
@@ -180,6 +189,21 @@ class DataVisualizerApp:
             self.show_error_message(f"CSV file exported successfully to:\n{file_path}")
         else:
             self.show_error_message(f"Error exporting CSV. Status code: {response.status_code}")
+
+    def reset_data(self):
+        # Replace 'http://localhost:5000/reset_data' with the actual endpoint of your data reset route
+        reset_url = 'http://localhost:5000/reset_data'
+
+        try:
+            # Include username and password for HTTP basic authentication
+            response = requests.post(reset_url, auth=(self.username, self.password))
+
+            if response.status_code == 200:
+                self.show_error_message("Data reset successfully.")
+            else:
+                self.show_error_message(f"Error resetting data. Status code: {response.status_code}")
+        except requests.RequestException as e:
+            self.show_error_message(f"Error resetting data: {e}")
 
     def show_error_message(self, message):
         # Update the error code box with the given message
