@@ -9,10 +9,10 @@
 DHT dht1(DHTPIN1, DHTTYPE);
 DHT dht2(DHTPIN2, DHTTYPE);
 
-const char* server = "api.raf-181.tech";
+const char* server = "";
 const char* apiEndpoint = "/data";
 const char* username = "esp32";  // Replace with your actual username
-const char* password = "sensor$295$sensor";  // Replace with your actual password
+const char* password = "password";  // Replace with your actual password
 
 void setup() {
   Serial.begin(115200);
