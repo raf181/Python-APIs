@@ -20,13 +20,7 @@ def log_data():
     return "Data received successfully"
 
 def write_data_to_file(data):
-    is_empty = os.stat(data_file_path).st_size == 0  # Check if the file is empty
-
     with open(data_file_path, 'a') as file:
-        if is_empty:
-            headers = ['timestamp', 'temperature1', 'humidity1', 'temperature2', 'humidity2']
-            file.write(','.join(headers) + '\n')
-
         file.write(",".join(data.values()) + "\n")
 
 @app.route('/dashboard')
