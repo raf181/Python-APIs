@@ -1,4 +1,4 @@
-#include <WiFiManager.h> // Include the WiFiManager library
+#include <WiFiManager.h>
 #include <DHT.h>
 #include <HTTPClient.h>
 
@@ -9,23 +9,20 @@
 DHT dht1(DHTPIN1, DHTTYPE);
 DHT dht2(DHTPIN2, DHTTYPE);
 
-const char* server = "192.168.43.1";
+const char* server = "api.raf-181.tech";
+const char* apiEndpoint = "/data";
+const char* username = "esp32";  // Replace with your actual username
+const char* password = "sensor$295$sensor";  // Replace with your actual password
 
 void setup() {
   Serial.begin(115200);
   delay(1000);
 
-  // Create an instance of WiFiManager
   WiFiManager wifiManager;
-
-  // Uncomment the line below to reset WiFi settings (useful during development)
-  // wifiManager.resetSettings();
-
-  // Connect to WiFi or start a configuration portal if not connected
+  
   if (!wifiManager.autoConnect("AutoConnectAP")) {
     Serial.println("Failed to connect and hit timeout");
     delay(3000);
-    // Reset and try again or put your code to handle the failure
     ESP.restart();
   }
 
@@ -44,7 +41,12 @@ void loop() {
   float humidity2 = dht2.readHumidity();
 
   HTTPClient http;
-  http.begin("http://" + String(server) + ":5000/data");
+  
+  http.begin("http://" + String(server) + ":5000" + apiEndpoint);
+  
+  // Add basic authentication credentials to the HTTP header
+  http.setAuthorization(username, password);
+
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   String postData = "timestamp=" + String(getFormattedTimestamp()) +
