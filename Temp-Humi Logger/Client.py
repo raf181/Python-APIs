@@ -52,13 +52,21 @@ class DataVisualizerApp:
         # Create Treeview widget for the table
         columns = ('Timestamp', 'Temperature 1', 'Temperature 2', 'Humidity 1', 'Humidity 2')
         self.tree = ttk.Treeview(self.tab_table, columns=columns, show='headings', height=30)
+
+        # Create vertical scrollbar for the table
+        self.tree_scrollbar = ttk.Scrollbar(self.tab_table, orient="vertical", command=self.tree.yview)
+        self.tree.configure(yscrollcommand=self.tree_scrollbar.set)
+
         for col in columns:
             self.tree.heading(col, text=col)
 
         # Move the temperature and humidity graph frames to their respective tabs
         self.plot_canvas_temperature.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.plot_canvas_humidity.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-        self.tree.pack(pady=10)
+        
+        # Pack the Treeview and scrollbar
+        self.tree.pack(pady=10, side=tk.LEFT)
+        self.tree_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
 
         self.create_widgets()
 
@@ -66,7 +74,7 @@ class DataVisualizerApp:
         self.auto_fetch_data()
 
     def create_widgets(self):
-        # Create buttons for fetching, exporting data, and resetting data in the Buttons tab
+        # Create buttons for fetching and exporting data in the Buttons tab
         self.fetch_button = ttk.Button(self.tab_buttons, text="Fetch Data", command=self.fetch_data, style="primary.TButton")
         self.fetch_button.pack(pady=10)
 
