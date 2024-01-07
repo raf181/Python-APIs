@@ -8,6 +8,7 @@ auth = HTTPBasicAuth()
 # Add your username and password
 users = {
     "user": "password",
+    "esp32": "password",
 }
 
 data_file_path = "data_log.txt"
