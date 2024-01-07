@@ -5,3 +5,4 @@ services:
     image: humi-doker
     ports:
       - "5000:5000"
+    restart: unless-stopped

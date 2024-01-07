@@ -1,0 +1,2 @@
+docker build -t humi-doker .
+docker compose up
