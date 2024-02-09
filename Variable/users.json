@@ -1,0 +1,4 @@
+[
+	{"username": "user1", "password": "pass1", "api_key": "key1"},
+	{"username": "user2", "password": "pass2", "api_key": "key2"}
+]
